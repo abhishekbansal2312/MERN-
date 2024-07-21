@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        body {
+            /* background-color: #f0f0f0; */
+            background-image: url(image.png);
+            /* background-repeat: no-repeat; */
+            /* background-size: cover; */
+            font-weight: 800;
+
+        }
+        h1 {
+            color: #333;
+        }
+        .form{
+            margin-top: 70px;
+            
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 30px 20px 20px rgba(73, 64, 64, 0.1);
+            width: 400px;
+            border: 2px solid rgb(33, 205, 33);
+            /* background: url(image2.png); */
+            /* background-color: rgba(169, 178, 167, 0.5); */
+            
+        }
+        input {
+            width: 70%;
+            padding: 10px;
+            margin: 10px 5px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            border-color: rgb(157, 150, 150);
+        }
+        select{
+            width: 100px; /* Set the desired width */
+            height: 30px; /* Set the desired height */
+            font-size: 16px; 
+            margin: 10px 5px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            border-color: rgb(157, 150, 150);
+            border-radius: 5px;
+            border-color: rgb(157, 150, 150);
+            box-shadow: 5px 5px 5px rgba(73, 64, 64, 0.1);
+        }
+        option {
+            padding: 10px;
+            margin: 10px 5px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            border-color: rgb(157, 150, 150);
+        }
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+  </head>
+  <body>
+    <center>
+        
+        <div class="form">
+            <form action="" method="post">
+                <h1>Order Page</h1>
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" required>
+                    <br>
+                <label for="Phone">Phone</label>
+                <input type="number" min="9" max="10" name="Phone"> <br>
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required><br>
+                <label for="date">Date</label>
+                <input type="date" name="date" id="" required>
+                <br>
+                <label for="time">Time</label>
+                <input type="time" name="time" id="" required><br>
+                <label for="food">Select Food Type</label>
+                <select name="food" id="" required>
+                    <option value="first" disabled selected hidden>Select Food</option>
+                    <option value="second">Veg</option>
+                    <option value="third">Non-veg</option>
+                </select><br>
+            
+                <label for="any-comments">Any Comments</label>
+                <textarea name="any-comments" id=""></textarea>
+                <input type="submit" value="Submit">
+                <input type="reset" value="Reset">
+        </div>
+    <br><br>
+   
+    </form>
+    </center>
+  </body>
+</html>

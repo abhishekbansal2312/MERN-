@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attribute Selectors Example</title>
+    <style>
+      /* CSS for the attribute selectors */
+      [data-custom] {
+        background-color: lightgray;
+        padding: 10px;
+      }
+
+      [data-type="primary"] {
+        color: blue;
+        font-weight: bold;
+      }
+
+      [data-tags~="important"] {
+        border: 2px solid red;
+      }
+      [data-type="secondary"] {
+        color: rgb(180, 27, 83);
+        font-weight: bold;
+      }
+
+      [data-lang|="en"] {
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Attribute Selectors Example</h1>
+
+    <!-- [data-custom] selector -->
+    <p data-custom>
+      This paragraph has a custom data attribute and will have a lightgray
+      background.
+    </p>
+
+    <!-- [data-type="primary"] selector -->
+    <p data-type="primary">
+      This paragraph has data-type="primary" and will be blue and bold.
+    </p>
+    <p data-type="secondary">
+      This paragraph has data-type="secondary" and will not be styled by the
+      data-type="primary" selector.
+    </p>
+
+    <!-- [data-tags~="important"] selector -->
+    <p data-tags="important notice">
+      This paragraph has data-tags containing "important" and will have a red
+      border.
+    </p>
+    <p data-tags="notice">
+      This paragraph has data-tags not containing "important" and will not have
+      a red border.
+    </p>
+
+    <!-- [data-lang|="en"] selector -->
+    <p data-lang="en-US">
+      This paragraph has data-lang="en-US" and will be italic.
+    </p>
+    <p data-lang="en-GB">
+      This paragraph has data-lang="en-GB" and will be italic.
+    </p>
+    <p data-lang="fr-FR">
+      This paragraph has data-lang="fr-FR" and will not be styled by the
+      data-lang|="en" selector.
+    </p>
+  </body>
+</html>
