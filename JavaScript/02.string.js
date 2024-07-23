@@ -1,21 +1,23 @@
-let x = [1, 2, 3, 45, 6, 7, 8, 9];
+// let x = [1, 2, 3, 45, -6, 7, -8, 9];
 // console.log(x.sort((a, b) => a - b));
 // console.log(x.sort((a, b) => b - a));
 // console.log(x.reverse());
 
-console.log(x.sort((a,b)=>{
-    if(a>b){
-        return -1;
-}
-}))
+// console.log(
+//   x.sort((a, b) => {
+//     return Math.pow(a, 2) - Math.pow(b, 2);
+//   })
+// );
+// console.log(
+//   x.map((a) => {
+//     return Math.pow(a, 2);
+//   })
+// );
+// function add(a, b) {
+//   return a + b;
+// }
 
-console.log(x.sort((a,b)=>{
-    if(a<b){
-        return 1;
-}}))
-
-
-// let 
+// let
 // if (y) {
 //   console.log("true");
 // }
