@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+     <style>
+      body {
+        background-color: rgb(164, 225, 240);
+      }
+      .container {
+        /* margin: 20px 200px; */
+        background-color: rgb(236, 239, 243);
+        padding: 20px 8%;
+        border-radius: 20px;
+        /* justify-content: space-evenly; */
+      }
+      @media screen and (min-width: 600px) {
+        .container {
+          margin: 20px 20px;
+        }
+      }
+      @media screen and (min-width: 1000px) {
+        .container {
+          margin: 20px 100px;
+        }
+      }
+      @media screen and (min-width:1200px) {
+        .container {
+          margin: 20px 300px;
+        }
+      }
+
+      select {
+        width: 40%;
+        height: 30px;
+        border: 1px solid rgb(201, 189, 189);
+        border-radius: 5px;
+      }
+      h1,
+      h2 {
+        text-align: center;
+      }
+      #box {
+        height: 25px;
+        width: 60%;
+        border: 1px solid rgb(201, 189, 189);
+        border-radius: 5px;
+
+      }
+      .right {
+        display: inline-block;
+        width: 55%;
+        text-align: left;
+        padding-left: 2%;
+      }
+      .left {
+        display: inline-block;
+        width: 40%;
+        text-align: right;
+        vertical-align: top;
+      }
+
+      @media screen and (max-width: 600px) {  
+        #txtarea {
+        width: 40%;
+        border: 1px solid rgb(201, 189, 189);
+        border-radius: 5px;
+      }
+        
+      }
+      input[type="submit"] {
+        background-color: rgb(64, 172, 180);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+      }
+      h1{
+        font-size: 3em;
+      }
+      h2{
+        font-family: "Lora", serif;
+        font-weight: 200;
+          font-style: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Good Vibes Form</h1>
+    <div class="container">
+      <h2>Tell us something positive that happened to you today.</h2>
+      <div class="Row">
+        <div class="left">
+          <label for="fullname">Name</label>
+        </div>
+        <div class="right">
+          <input type="text" name="fullname" placeholder="Enter your name" id="box" />
+        </div>
+      </div>
+      <br />
+      <div class="Row">
+        <div class="left">
+          <label for="email">Email</label>
+        </div>
+        <div class="right">
+          <input type="email" name="email" placeholder="Enter your Email Address" id="box" />
+        </div>
+      </div>
+      <br />
+      <div class="Row">
+        <div class="left">
+          <label for="message">On a scale of 1-10, how good was it?</label>
+        </div>
+        <div class="right">
+          <input type="number" name="message" placeholder="Enter a number between 1 and 10" id="box" max="10" />
+        </div>
+      </div>
+      <br />
+      <div class="Row">
+        <div class="left">
+          <label for="happen">Where did it happen?</label>
+        </div>
+        <div class="right">
+          <select name="happen" id="">
+            <option value="home">At Home</option>
+            <option value="commute">On My Commute</option>
+            <option value="work">At Work</option>
+            <option value="street">On the Street</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="Row">
+        <div class="left">
+          <label for="time">At what time of day did it happen?</label>
+        </div>
+        <div class="right">
+          <input type="radio" name="time" id="" value="Morning" />
+          <label for="time">Morning</label><br>
+          <input type="radio" name="time" id="" value="Morning" />
+          <label for="time">Afternoon</label><br>
+          <input type="radio" name="time" id="" value="Morning" />
+          <label for="time">Evening</label><br>
+          <br />
+        </div>
+      </div>
+      <br />
+      <div class="Row">
+        <div class="left">
+          <label for="experience"
+            >What emotions did you experience? (Select all that apply)</label
+          >
+        </div>
+        <div class="right">
+          <input type="checkbox" name="experience" id="" />
+          <label for="experience">Joy</label><br>
+          <input type="checkbox" name="Humbled" id="" />
+          <label for="experience">Humbled</label><br>
+          <input type="checkbox" name="Elated" id="" />
+          <label for="experience">Elated</label><br>
+          <input type="checkbox" name="Loved" id="" />
+          <label for="experience">Loved</label><br>
+          <input type="checkbox" name="Enthusiastic" id="" />
+          <label for="experience">Enthusiastic</label><br />
+        </div>
+      </div>
+      <br />
+      <div class="Row">
+        <div class="left">
+          <label for="describe">Please describe your positive experience..</label>
+        </div>
+        <div class="right">
+          <textarea name="describe" id="txtarea" placeholder="Enter your experience here..." cols="30" rows="4"></textarea>
+        </div>
+      </div>
+      <br />
+      <div class="Row">
+        <div class="left"></div>
+        <div class="right">
+          <input type="submit" value="Submit" />
+        </div>
+    </div>
+  </body>
+</html>
