@@ -16,9 +16,22 @@ parentDiv.style.border = "1px solid black";
 parentDiv.style.width = "400px";
 parentDiv.style.height = "400px";
 
-let flag = 1;
+// let flag = 0;
+let pieces = [
+  ["♜", "♞", "♝", "♛", "♚", "♝", "♞", "♜"],
+  ["♟", "♟", "♟", "♟", "♟", "♟", "♟", "♟"],
+  ["", "", "", "", "", "", "", ""],
+  ["", "", "", "", "", "", "", ""],
+  ["", "", "", "", "", "", "", ""],
+  ["", "", "", "", "", "", "", ""],
+  ["♙", "♙", "♙", "♙", "♙", "♙", "♙", "♙"],
+  ["♖", "♘", "♗", "♕", "♔", "♗", "♘", "♖"],
+];
 parentDiv.style.display = "grid";
 parentDiv.style.gridTemplateColumns = "repeat(8, 50px)";
+parentDiv.style.gridTemplateRows = "repeat(8, 50px)";
+parentDiv.style.gap = "0px";
+
 for (let i = 0; i < 8; i++) {
   for (let j = 0; j < 8; j++) {
     let cell = document.createElement("div");
@@ -26,7 +39,7 @@ for (let i = 0; i < 8; i++) {
     cell.style.width = "50px";
     cell.style.height = "50px";
     cell.style.fontSize = "20px";
-    cell.innerHTML = flag;
+    cell.innerHTML = pieces[i][j];
     cell.style.display = "flex";
     cell.style.justifyContent = "center";
     cell.style.alignItems = "center";
@@ -45,7 +58,7 @@ for (let i = 0; i < 8; i++) {
       cell.style.backgroundColor = "rgb(241, 245, 189)";
       cell.style.color = "black";
       cell.addEventListener("mouseover", function () {
-        cell.style.backgroundColor = "rgb(171, 181, 148)";
+        cell.style.backgroundColor = "white";
       });
       cell.addEventListener("mouseout", function () {
         cell.style.backgroundColor = "rgb(241, 245, 189)";
@@ -53,6 +66,6 @@ for (let i = 0; i < 8; i++) {
     }
     cell.style.border = "3px solid black";
 
-    flag++;
+    // flag++;
   }
 }
