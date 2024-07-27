@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f1f1f1;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        width: 400px;
+        height: 400px;
+      }
+
+      .block {
+        background-color: #e40707;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="block" id="1"></div>
+      <div class="block" id="1"></div>
+      <div class="block" id="2"></div>
+      <div class="block" id="2"></div>
+      <div class="block" id="3"></div>
+      <div class="block" id="3"></div>
+      <div class="block" id="4"></div>
+      <div class="block" id="4"></div>
+    </div>
+    <div id="score"></div>
+  </body>
+</html>
