@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Maker</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      textarea {
+        width: 300px;
+        height: 100px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+
+      img {
+        width: 150px;
+        height: 150px;
+        border: 1px solid #ccc;
+      }
+
+      .progress-container {
+        width: 300px;
+        height: 20px;
+        background-color: #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 10px;
+      }
+
+      .progress-bar {
+        height: 100%;
+        background-color: #76c7c0;
+        width: 0;
+        text-align: center;
+        color: white;
+        line-height: 20px;
+        border-radius: 10px 0 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>QR Code Maker</h1>
+      <textarea placeholder="Enter text to generate QR code..."></textarea>
+      <img src="" alt="QR Code will be displayed here" />
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar">0%</div>
+      </div>
+    </div>
+
+    <script>
+      const input = document.querySelector("textarea");
+      const img = document.querySelector("img");
+      const progressBar = document.getElementById("progress-bar");
+
+      input.addEventListener("input", () => {
+        const textLength = input.value.length;
+        const maxLength = 100; // You can adjust the max length value if needed
+        const percentage = Math.min((textLength / maxLength) * 100, 100);
+
+        progressBar.style.width = `${percentage}%`;
+        progressBar.textContent = `${Math.round(percentage)}%`;
+
+        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
+          input.value
+        )}`;
+      });
+    </script>
+  </body>
+</html>

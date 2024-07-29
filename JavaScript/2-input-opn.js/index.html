@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Calculator</title>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      input, select, button, p {
+        margin: 10px;
+        padding: 10px;
+        width: 200px;
+        text-align: center;
+      }
+      p {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <input type="text" id="input1" placeholder="Enter first number" />
+      <select id="operator">
+        <option value="" disabled hidden selected>Operator</option>
+        <option value="add">+</option>
+        <option value="sub">-</option>
+        <option value="mul">*</option>
+        <option value="div">/</option>
+      </select>
+      <input type="text" id="input2" placeholder="Enter second number" />
+      <button id="button">Calculate</button>
+      <p id="result">Answer?</p>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
