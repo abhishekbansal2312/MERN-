@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f4;
+      }
+      .container {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      #left,
+      #right {
+        width: 45%;
+        min-height: 300px;
+        padding: 10px;
+        border: 2px dashed #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+      }
+      .list {
+        margin: 10px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #e9e9e9;
+        cursor: grab;
+      }
+      .list:active {
+        cursor: grabbing;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="left">
+        <div class="list" draggable="true">box1</div>
+        <div class="list" draggable="true">box2</div>
+        <div class="list" draggable="true">box3</div>
+        <div class="list" draggable="true">box4</div>
+      </div>
+      <div id="right"></div>
+    </div>
+    <script>
+    const lists = document.querySelectorAll(".list");
+const left = document.getElementById("left");
+const right = document.getElementById("right");
+
+for (let list of lists) {  // Changed from 'for (list of lists)'
+  list.addEventListener("dragstart", function (e) {
+    let selected = e.target;
+    right.addEventListener("dragover", function (e) {
+      e.preventDefault();
+    });
+    right.addEventListener("drop", function (e) {
+      e.preventDefault(); // Added to prevent default handling
+      if (e.target.id === "right" || e.target.classList.contains("list")) { // Check for valid drop target
+        right.appendChild(selected);
+        selected = null;
+      }
+    });
+  });
+}
+
+for (let list of lists) {  // Changed from 'for (list in lists)'
+  list.addEventListener("dragend", function (e) {
+    let selected = e.target;
+    left.addEventListener("dragover", function (e) {
+      e.preventDefault();
+    });
+    left.addEventListener("drop", function (e) {
+      e.preventDefault(); // Added to prevent default handling
+      if (e.target.id === "left" || e.target.classList.contains("list")) { // Check for valid drop target
+        left.appendChild(selected);
+        selected = null;
+      }
+    });
+  });
+}
+
+    </script>
+  </body>
+</html>
