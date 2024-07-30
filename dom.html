@@ -12,6 +12,9 @@
       .highlight {
         background-color: yellow;
       }
+      h1 {
+        border: 3px solid red;
+      }
     </style>
   </head>
   <body>
@@ -51,28 +54,10 @@
     <script>
       // JavaScript to interact with the DOM
       const body = document.body;
-
-      const footer = body.children[2];
-      console.log(footer.firstElementChild.firstElementChild);
-
-
-      //   console.log();
-      //   const main = body.children[1].children[1].childNodes[3].parentElement.parentElement.parentNode.hasChildNodes();
-      //   console.log(main);
-      //   const footer = body.children[2];
-      //   console.log(footer);
-      //   const ul = document.querySelectorAll("#example-list");
-      //   console.log(ul.children);
-      //   ul.parentNode.style.backgroundColor = "lightgray";
-
-      //   console.log(ul.parentNode);
-      // ul.parentNode={}
-      //   console.log(ul[0].parentNode.children.firstElementChild);
-
-      // difference between append() and appendChild()
-        //   const ul = document.querySelector("#example-list");
-        
-
+      let ul = document.getElementById("example-list");
+      let li = document.createElement("li");
+      li.textContent = "new item";
+      ul.insertBefore(li, ul.children[0]);
     </script>
   </body>
-</html>
+</html> 

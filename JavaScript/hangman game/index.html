@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Hangman Game</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -16,39 +16,165 @@
       }
       .container {
         background: #fff;
-        padding: 20px;
+        padding: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         width: 60%;
         height: 75%;
         display: flex;
+        justify-content: space-around;
+        align-items: center;
       }
-      .img {
+      .left {
+        text-align: center;
+      }
+      .left img {
         width: 80%;
         height: 80%;
+      }
+      .right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+      }
+      #word {
+        font-size: 50px;
+        font-weight: bold;
+        margin: 20px;
+        margin-top: 70px;
+        letter-spacing: 10px;
+      }
+      #hint {
+        font-size: 15px;
+        margin: 20px;
+      }
+      #incorrect {
+        font-size: 20px;
+        margin: 20px;
+      }
+      #keyboard {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+      }
+      button.key {
+        padding: 10px;
+        font-size: 20px;
+        background-color: #d0e41d;
+        border: 1px solid #000;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      button.key:hover {
+        background-color: #e0e0e0;
+      }
+      button.key:active {
+        background-color: #d0d0d0;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="left">
-        <img src="hangman-0.svg" alt="" />
+        <img id="hangman-img" src="hangman-0.svg" alt="Hangman Image" />
         <h2>HANGMAN GAME</h2>
       </div>
-      <!--  -->
       <div class="right">
-        <div class="word"><h1 id="word">CAMERA</h1></div>
+        <div class="word"><h1 id="word">______</h1></div>
         <div>
           <h5 id="hint">
-            Hint:A device to capture and record images or videos
+            Hint: A device to capture and record images or videos
           </h5>
         </div>
-        <div><h5 id="incorrect">Incorrect Guesses:7</h5></div>
-        <div id="keyboard"></div>
+        <div><h5 id="incorrect">Incorrect Guesses: 0</h5></div>
+        <div id="keyboard">
+          <!-- First row -->
+          <button class="key">Q</button>
+          <button class="key">W</button>
+          <button class="key">E</button>
+          <button class="key">R</button>
+          <button class="key">T</button>
+          <button class="key">Y</button>
+          <button class="key">U</button>
+          <button class="key">I</button>
+          <button class="key">O</button>
+          <button class="key">P</button>
+          <!-- Second row -->
+          <button class="key">A</button>
+          <button class="key">S</button>
+          <button class="key">D</button>
+          <button class="key">F</button>
+          <button class="key">G</button>
+          <button class="key">H</button>
+          <button class="key">J</button>
+          <button class="key">K</button>
+          <button class="key">L</button>
+          <!-- Third row -->
+          <button class="key">Z</button>
+          <button class="key">X</button>
+          <button class="key">C</button>
+          <button class="key">V</button>
+          <button class="key">B</button>
+          <button class="key">N</button>
+          <button class="key">M</button>
+        </div>
       </div>
     </div>
-    <script src="script.js">
-      
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const wordElement = document.getElementById("word");
+        const incorrectElement = document.getElementById("incorrect");
+        const hangmanImg = document.getElementById("hangman-img");
+        const keys = document.querySelectorAll(".key");
+
+        const wordToGuess = "CAMERA";
+        const maxIncorrectGuesses = 6;
+        let incorrectGuesses = 0;
+        let guessedLetters = [];
+
+        // Initialize the word display
+        let wordDisplay = "_".repeat(wordToGuess.length);
+        wordElement.textContent = wordDisplay.split("").join(" ");
+
+        keys.forEach((key) => {
+          key.addEventListener("click", function () {
+            const char = this.innerText;
+            if (
+              guessedLetters.includes(char) ||
+              incorrectGuesses >= maxIncorrectGuesses
+            ) {
+              return;
+            }
+            guessedLetters.push(char);
+            if (wordToGuess.includes(char)) {
+              // Update word display
+              for (let i = 0; i < wordToGuess.length; i++) {
+                if (wordToGuess[i] === char) {
+                  wordDisplay =
+                    wordDisplay.substr(0, i) + char + wordDisplay.substr(i + 1);
+                }
+              }
+              wordElement.textContent = wordDisplay.split("").join(" ");
+              if (wordDisplay === wordToGuess) {
+                alert("Congratulations! You guessed the word!");
+                // Reset the game or add additional logic
+              }
+            } else {
+              incorrectGuesses++;
+              incorrectElement.textContent = `Incorrect Guesses: ${incorrectGuesses}`;
+              hangmanImg.src = `hangman-${incorrectGuesses}.svg`;
+              if (incorrectGuesses >= maxIncorrectGuesses) {
+                alert("Game Over! The word was " + wordToGuess);
+                // Reset the game or add additional logic
+              }
+            }
+          });
+        });
+      });
     </script>
   </body>
 </html>
