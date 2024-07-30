@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Understanding DOM Tree</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .highlight {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Understanding the DOM Tree</h1>
+    </header>
+
+    <main>
+      <section>
+        <h2>Introduction</h2>
+        <p>
+          The Document Object Model (DOM) is a programming interface for web
+          documents. It represents the page so that programs can change the
+          document structure, style, and content.
+        </p>
+      </section>
+
+      <section>
+        <h2>Example List</h2>
+        <ul id="example-list">
+          <li class="lis">First item</li>
+          <li class="lis">Second item</li>
+          <li class="lis">Third item</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Interactive Element</h2>
+        <button id="highlight-button">Highlight List Items</button>
+      </section>
+    </main>
+
+    <footer id="footer">
+      <p>&copy; 2024 Learning DOM Tree</p>
+    </footer>
+
+    <script>
+      // JavaScript to interact with the DOM
+      const body = document.body;
+
+      const footer = body.children[2];
+      console.log(footer.firstElementChild.firstElementChild);
+
+
+      //   console.log();
+      //   const main = body.children[1].children[1].childNodes[3].parentElement.parentElement.parentNode.hasChildNodes();
+      //   console.log(main);
+      //   const footer = body.children[2];
+      //   console.log(footer);
+      //   const ul = document.querySelectorAll("#example-list");
+      //   console.log(ul.children);
+      //   ul.parentNode.style.backgroundColor = "lightgray";
+
+      //   console.log(ul.parentNode);
+      // ul.parentNode={}
+      //   console.log(ul[0].parentNode.children.firstElementChild);
+
+      // difference between append() and appendChild()
+        //   const ul = document.querySelector("#example-list");
+        
+
+    </script>
+  </body>
+</html>
