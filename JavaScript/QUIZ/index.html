@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        /* background-color: #f4f4f9; */
+        background: url("https://media.istockphoto.com/id/1225185577/vector/happy-positive-kids-doodles-funny-hand-drawn-set-education-kindergarden-adventure-birthday.jpg?s=612x612&w=0&k=20&c=rcyzHgYpjTVKiM9znNjAq-DxWHk3jfCqQ5BJkwQsU5U=");
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        background-color: #e0edf1;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 30%;
+        text-align: center;
+      }
+      #start,
+      #prev,
+      #next,
+      #finish {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      #start {
+        margin-top: 28px;
+      }
+      #start:hover,
+      #prev:hover,
+      #next:hover {
+        background-color: #45a049;
+      }
+      #prev {
+        background-color: #f39c12;
+      }
+      #next {
+        background-color: #3498db;
+      }
+      #prev:hover {
+        background-color: #e67e22;
+      }
+      #next:hover {
+        background-color: #2980b9;
+      }
+      #question {
+        margin: 20px 0;
+        font-size: 18px;
+      }
+      .option {
+        background-color: #13baf1;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        margin: 5px 0;
+        width: 100%;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .option:hover {
+        background-color: #6cc7f0;
+      }
+      .complete {
+        font-size: 20px;
+        color: #4caf50;
+        margin-top: 20px;
+      }
+      #timer {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #e74c3c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <button id="start">Start Quiz</button>
+      <div id="timer"></div>
+      <div id="question"></div>
+      <div id="options"></div>
+      <span
+        ><button id="prev" style="display: none">Previous</button>
+        <button id="next" style="display: none">Next</button>
+        <button id="finish" style="display: none">Finish</button>
+      </span>
+      <div class="complete" id="complete"></div>
+    </div>
+    <script>
+      const question = document.getElementById("question");
+      const options = document.getElementById("options");
+      const start = document.getElementById("start");
+      const complete = document.getElementById("complete");
+      const timerElement = document.getElementById("timer");
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
+      const finish = document.getElementById("finish");
+
+      const quiz = [
+        {
+          index: 1,
+          question: "What is a closure in JavaScript?",
+          options: [
+            "A function that returns another function",
+            "A function with a variable scope inside it",
+            "A block of code that can be invoked later",
+            "A method to prevent variable access from outside",
+          ],
+          answer: "A function that returns another function",
+        },
+        {
+          index: 2,
+          question:
+            "Which of the following is not a valid way to create a promise?",
+          options: [
+            "new Promise((resolve, reject) => { ... })",
+            "Promise.resolve(value)",
+            "Promise.reject(reason)",
+            "Promise.create((resolve, reject) => { ... })",
+          ],
+          answer: "Promise.create((resolve, reject) => { ... })",
+        },
+        {
+          index: 3,
+          question:
+            "What will be the output of `0.1 + 0.2 === 0.3` in JavaScript?",
+          options: ["true", "false", "undefined", "NaN"],
+          answer: "false",
+        },
+        {
+          index: 4,
+          question: "What is the purpose of the 'bind' method in JavaScript?",
+          options: [
+            "To create a new function with a specific 'this' value",
+            "To clone an object",
+            "To execute a function immediately",
+            "To delay the execution of a function",
+          ],
+          answer: "To create a new function with a specific 'this' value",
+        },
+        {
+          index: 5,
+          question: "What is the difference between 'null' and 'undefined'?",
+          options: [
+            "'null' is a value assigned to a variable; 'undefined' means a variable has been declared but not assigned",
+            "'null' is a type; 'undefined' is a value",
+            "'null' and 'undefined' are interchangeable",
+            "'undefined' is a value; 'null' is a type",
+          ],
+          answer:
+            "'null' is a value assigned to a variable; 'undefined' means a variable has been declared but not assigned",
+        },
+        {
+          index: 6,
+          question: "How does the 'async/await' syntax help in JavaScript?",
+          options: [
+            "It simplifies the handling of asynchronous code",
+            "It creates asynchronous functions automatically",
+            "It prevents the need for callbacks",
+            "It makes code run in parallel",
+          ],
+          answer: "It simplifies the handling of asynchronous code",
+        },
+        {
+          index: 7,
+          question: "What does the 'spread' operator do in JavaScript?",
+          options: [
+            "It expands elements of an array or object into individual elements",
+            "It combines multiple arrays into one",
+            "It collapses an array into a single element",
+            "It formats an object into a string",
+          ],
+          answer:
+            "It expands elements of an array or object into individual elements",
+        },
+        {
+          index: 8,
+          question:
+            "What is the difference between 'let' and 'var' in JavaScript?",
+          options: [
+            "'let' has block scope; 'var' has function scope",
+            "'let' is hoisted; 'var' is not",
+            "'let' can be redeclared; 'var' cannot",
+            "'let' is only available in loops; 'var' is available globally",
+          ],
+          answer: "'let' has block scope; 'var' has function scope",
+        },
+        {
+          index: 9,
+          question: "What does the 'Object.freeze()' method do?",
+          options: [
+            "It prevents modifications to an object",
+            "It creates a deep copy of an object",
+            "It serializes an object to JSON",
+            "It makes an object immutable",
+          ],
+          answer: "It prevents modifications to an object",
+        },
+        {
+          index: 10,
+          question: "What is 'Event Delegation' in JavaScript?",
+          options: [
+            "A technique to handle events at a higher level in the DOM",
+            "A method to attach multiple event listeners to a single element",
+            "A way to delegate the execution of functions",
+            "A technique to remove event listeners",
+          ],
+          answer: "A technique to handle events at a higher level in the DOM",
+        },
+        {
+          index: 11,
+          question: "How does the 'Object.create()' method work?",
+          options: [
+            "It creates a new object with the specified prototype",
+            "It creates a deep copy of an object",
+            "It serializes an object to JSON",
+            "It merges two objects into one",
+          ],
+          answer: "It creates a new object with the specified prototype",
+        },
+        {
+          index: 12,
+          question:
+            "What is the difference between 'call' and 'apply' methods in JavaScript?",
+          options: [
+            "'call' takes arguments as a list; 'apply' takes arguments as an array",
+            "'call' creates a new function; 'apply' executes immediately",
+            "'call' can only be used on objects; 'apply' can be used on functions",
+            "'call' binds a function; 'apply' binds an object",
+          ],
+          answer:
+            "'call' takes arguments as a list; 'apply' takes arguments as an array",
+        },
+        {
+          index: 13,
+          question: "What does the 'this' keyword refer to in a method?",
+          options: [
+            "The object that the method is a property of",
+            "The global object",
+            "The function itself",
+            "The prototype of the function",
+          ],
+          answer: "The object that the method is a property of",
+        },
+        {
+          index: 14,
+          question: "What is 'currying' in JavaScript?",
+          options: [
+            "A technique to transform a function with multiple arguments into a sequence of functions with a single argument",
+            "A method to optimize function performance",
+            "A way to chain multiple functions together",
+            "A technique to handle asynchronous code",
+          ],
+          answer:
+            "A technique to transform a function with multiple arguments into a sequence of functions with a single argument",
+        },
+        {
+          index: 15,
+          question: "How does the 'Object.assign()' method work?",
+          options: [
+            "It copies values from one or more source objects to a target object",
+            "It creates a new object with properties of the source object",
+            "It merges two arrays into one",
+            "It assigns a new prototype to an object",
+          ],
+          answer:
+            "It copies values from one or more source objects to a target object",
+        },
+        {
+          index: 16,
+          question: "What is 'debouncing' in JavaScript?",
+          options: [
+            "A technique to limit the rate of function execution by ensuring that the function is only executed after a certain period of inactivity",
+            "A method to execute functions in parallel",
+            "A way to delay the execution of a function",
+            "A technique to optimize asynchronous code",
+          ],
+          answer:
+            "A technique to limit the rate of function execution by ensuring that the function is only executed after a certain period of inactivity",
+        },
+        {
+          index: 17,
+          question: "What is the purpose of the 'Proxy' object in JavaScript?",
+          options: [
+            "It allows you to create a handler for object operations",
+            "It proxies requests to another server",
+            "It intercepts and modifies object properties",
+            "It creates an immutable object",
+          ],
+          answer: "It allows you to create a handler for object operations",
+        },
+        {
+          index: 18,
+          question: "What does the 'Symbol' data type represent in JavaScript?",
+          options: [
+            "A unique and immutable primitive value used as an object property key",
+            "A string with special characters",
+            "A type of function",
+            "An object with custom methods",
+          ],
+          answer:
+            "A unique and immutable primitive value used as an object property key",
+        },
+        {
+          index: 19,
+          question: "What is the purpose of the 'Reflect' API in JavaScript?",
+          options: [
+            "It provides methods for intercepting and defining behavior for fundamental operations",
+            "It reflects the current state of an object",
+            "It creates a mirror of an object",
+            "It optimizes the performance of JavaScript code",
+          ],
+          answer:
+            "It provides methods for intercepting and defining behavior for fundamental operations",
+        },
+        {
+          index: 20,
+          question: "How does the 'Event Loop' work in JavaScript?",
+          options: [
+            "It handles asynchronous operations by executing callback functions from the queue once the call stack is empty",
+            "It executes all functions immediately in parallel",
+            "It creates a new thread for each function",
+            "It delays the execution of functions until the stack is clear",
+          ],
+          answer:
+            "It handles asynchronous operations by executing callback functions from the queue once the call stack is empty",
+        },
+      ];
+
+      let currentQuestion = 0;
+      let score = 0;
+      let timer;
+
+      start.addEventListener("click", function () {
+        displayQuestion();
+      });
+
+      prev.addEventListener("click", function () {
+        if (currentQuestion > 0) {
+          currentQuestion--;
+          displayQuestion();
+        }
+      });
+
+      next.addEventListener("click", function () {
+        if (currentQuestion < quiz.length - 1) {
+          currentQuestion++;
+          displayQuestion();
+        }
+      });
+
+      function displayQuestion() {
+        clearInterval(timer);
+        startTimer();
+        start.style.display = "none";
+        timerElement.textContent = "";
+        question.textContent = quiz[currentQuestion].question;
+        options.innerHTML = "";
+        quiz[currentQuestion].options.forEach(function (option) {
+          const button = document.createElement("button");
+          button.textContent = option;
+          button.classList.add("option");
+          options.appendChild(button);
+        });
+        const optionButtons = document.querySelectorAll(".option");
+        optionButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            clearInterval(timer);
+            if (button.textContent === quiz[currentQuestion].answer) {
+              score += 2;
+            } else {
+              score--;
+            }
+            currentQuestion++;
+            if (currentQuestion < quiz.length) {
+              displayQuestion();
+            } else {
+              endQuiz();
+              clearInterval(timer);
+            }
+          });
+        });
+
+        // Show/hide prev and next buttons
+        prev.style.display = currentQuestion > 0 ? "inline" : "none";
+        next.style.display =
+          currentQuestion < quiz.length - 1 ? "inline" : "none";
+        finish.style.display = currentQuestion >= 0 ? "inline" : "none";
+
+        // Start timer if it's the first question
+      }
+
+      function startTimer() {
+        let time = 60;
+        timerElement.textContent = `Time left: ${time} seconds`;
+        timer = setInterval(() => {
+          time--;
+          timerElement.textContent = `Time left: ${time} seconds`;
+          if (time <= 0) {
+            clearInterval(timer);
+            currentQuestion++;
+            if (currentQuestion < quiz.length) {
+              displayQuestion();
+            } else {
+              endQuiz();
+              clearInterval(timer);
+            }
+          }
+        }, 1000);
+      }
+      finish.addEventListener("click", function () {
+        endQuiz();
+        clearInterval(timer);
+        finish.style.display = "none";
+      });
+      function endQuiz() {
+        question.textContent = "Quiz Complete!";
+        options.innerHTML = "";
+        complete.textContent = "Congratulations! You've completed the quiz.";
+        let scoreText = document.createElement("p");
+        scoreText.textContent = `Your score is ${score} out of ${
+          quiz.length * 2
+        }`;
+        complete.appendChild(scoreText);
+        timerElement.textContent = "";
+        prev.style.display = "none";
+        next.style.display = "none";
+      }
+    </script>
+  </body>
+</html>

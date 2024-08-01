@@ -16,64 +16,74 @@
       }
       .container {
         background: #fff;
-        padding: 10px;
+        padding: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
-        width: 60%;
-        height: 75%;
+        width: 70%;
+        max-width: 1000px;
+        height: 80%;
         display: flex;
         justify-content: space-around;
         align-items: center;
       }
       .left {
         text-align: center;
+        flex: 1 1 40%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       .left img {
-        width: 80%;
+        width: 70%;
         height: 80%;
       }
       .right {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 50%;
+        flex: 1 1 60%;
         height: 100%;
       }
       #word {
-        font-size: 50px;
+        font-size: 40px;
         font-weight: bold;
-        margin: 20px;
-        margin-top: 70px;
+        margin: 20px 0;
         letter-spacing: 10px;
       }
       #hint {
-        font-size: 15px;
-        margin: 20px;
+        font-size: 18px;
+        margin: 10px 0;
       }
       #incorrect {
         font-size: 20px;
-        margin: 20px;
+        margin: 10px 0;
       }
       #keyboard {
         display: grid;
         grid-template-columns: repeat(10, 1fr);
         gap: 10px;
         margin-top: 20px;
+        width: 100%;
       }
       button.key {
-        padding: 10px;
-        font-size: 20px;
+        padding: 5px;
+        font-size: 18px;
         background-color: #d0e41d;
         border: 1px solid #000;
         border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s;
+        transition: background-color 0.3s, transform 0.1s;
       }
       button.key:hover {
         background-color: #e0e0e0;
       }
       button.key:active {
         background-color: #d0d0d0;
+        transform: scale(0.95);
+      }
+      button.key:disabled {
+        background-color: #f0f0f0;
+        cursor: not-allowed;
       }
     </style>
   </head>
@@ -140,9 +150,22 @@
         let wordDisplay = "_".repeat(wordToGuess.length);
         wordElement.textContent = wordDisplay.split("").join(" ");
 
+        function resetGame() {
+          incorrectGuesses = 0;
+          guessedLetters = [];
+          wordDisplay = "_".repeat(wordToGuess.length);
+          wordElement.textContent = wordDisplay.split("").join(" ");
+          incorrectElement.textContent = "Incorrect Guesses: 0";
+          hangmanImg.src = "hangman-0.svg";
+          keys.forEach((key) => {
+            key.disabled = false;
+          });
+        }
+
         keys.forEach((key) => {
           key.addEventListener("click", function () {
             const char = this.innerText;
+            this.disabled = true;
             if (
               guessedLetters.includes(char) ||
               incorrectGuesses >= maxIncorrectGuesses
@@ -161,15 +184,15 @@
               wordElement.textContent = wordDisplay.split("").join(" ");
               if (wordDisplay === wordToGuess) {
                 alert("Congratulations! You guessed the word!");
-                // Reset the game or add additional logic
+                resetGame();
               }
             } else {
               incorrectGuesses++;
               incorrectElement.textContent = `Incorrect Guesses: ${incorrectGuesses}`;
               hangmanImg.src = `hangman-${incorrectGuesses}.svg`;
               if (incorrectGuesses >= maxIncorrectGuesses) {
-                alert("Game Over! The word was " + wordToGuess);
-                // Reset the game or add additional logic
+                // incorrectElement.textContent == "Game Over!";
+                resetGame();
               }
             }
           });
