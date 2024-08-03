@@ -6,8 +6,10 @@
     <title>Quiz App</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
-        background: url("https://media.istockphoto.com/id/1225185577/vector/happy-positive-kids-doodles-funny-hand-drawn-set-education-kindergarden-adventure-birthday.jpg?s=612x612&w=0&k=20&c=rcyzHgYpjTVKiM9znNjAq-DxWHk3jfCqQ5BJkwQsU5U=");
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
         color: #333;
         display: flex;
         justify-content: center;
@@ -15,122 +17,165 @@
         height: 100vh;
         margin: 0;
       }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 0%;
+        }
+        50% {
+          background-position: 100% 100%;
+        }
+        100% {
+          background-position: 0% 0%;
+        }
+      }
+
       .container {
-        background-color: #e0edf1;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 80%;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 90%;
         max-width: 600px;
         text-align: center;
       }
+
       #start,
       #prev,
       #next,
-      #finish {
-        background-color: #4caf50;
+      #finish,
+      #reset {
+        background-color: #1e90ff;
         color: #fff;
         border: none;
-        padding: 10px 20px;
+        padding: 12px 24px;
         font-size: 16px;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
         margin: 5px;
+        transition: background-color 0.3s ease;
       }
-      #start {
-        margin-top: 28px;
-      }
+
       #start:hover,
       #prev:hover,
       #next:hover,
-      #finish:hover {
-        background-color: #45a049;
+      #finish:hover,
+      #reset:hover {
+        background-color: #4682b4;
       }
+
       #prev {
         background-color: #f39c12;
       }
+
       #next {
-        background-color: #6bb3e2;
+        background-color: #32cd32;
       }
+
       #prev:hover {
         background-color: #e67e22;
       }
+
       #next:hover {
-        background-color: #4b80a2;
+        background-color: #228b22;
       }
+
       #question {
         margin: 20px 0;
-        font-size: 18px;
+        font-size: 20px;
+        font-weight: bold;
       }
+
       .option {
-        background-color: #13baf1;
+        background-color: #1e90ff;
         color: #fff;
         border: none;
-        padding: 10px;
-        margin: 5px 0;
+        padding: 12px;
+        margin: 8px 0;
         width: 100%;
         font-size: 16px;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
+        transition: background-color 0.3s ease;
       }
+
       .option:hover {
-        background-color: #6cc7f0;
+        background-color: #4682b4;
       }
+
+      .correct {
+        background-color: #4caf50 !important;
+      }
+
+      .incorrect {
+        background-color: #e74c3c !important;
+      }
+
       .complete {
-        font-size: 20px;
+        font-size: 22px;
         color: #4caf50;
         margin-top: 20px;
       }
+
       #timer {
         font-size: 18px;
         margin-bottom: 20px;
-        color: #e74c3c;
+        color: #ff4500;
       }
+
       @media (max-width: 600px) {
-        body {
-          padding: 10px;
-        }
         .container {
-          width: 100%;
-          padding: 15px;
+          padding: 20px;
         }
+
         #question {
-          font-size: 16px;
+          font-size: 18px;
         }
+
         .option {
           font-size: 14px;
         }
+
         #start,
         #prev,
         #next,
-        #finish {
-          padding: 8px 15px;
+        #finish,
+        #reset {
+          padding: 10px 20px;
           font-size: 14px;
         }
+
         .complete {
-          font-size: 18px;
+          font-size: 20px;
         }
+
         #timer {
           font-size: 16px;
         }
       }
+
       @media (max-width: 400px) {
         #question {
-          font-size: 14px;
+          font-size: 16px;
         }
+
         .option {
           font-size: 12px;
         }
+
         #start,
         #prev,
         #next,
-        #finish {
-          padding: 6px 10px;
+        #finish,
+        #reset {
+          padding: 8px 15px;
           font-size: 12px;
         }
+
         .complete {
-          font-size: 16px;
+          font-size: 18px;
         }
+
         #timer {
           font-size: 14px;
         }
@@ -140,28 +185,28 @@
   <body>
     <div class="container">
       <button id="start">Start Quiz</button>
-      <div id="timer"></div>
+      <div id="timer">Time left: 600 seconds</div>
       <div id="question"></div>
       <div id="options"></div>
-      <span>
-        <button id="next" style="display: none">Next</button>
-        <button id="finish" style="display: none">Finish</button>
-      </span>
+      <button id="next" style="display: none">Next</button>
+      <button id="finish" style="display: none">Finish</button>
+      <button id="reset" style="display: none">Reset</button>
       <div class="complete" id="complete"></div>
     </div>
     <script>
-      const question = document.getElementById("question");
-      const options = document.getElementById("options");
-      const start = document.getElementById("start");
-      const complete = document.getElementById("complete");
-      const timerElement = document.getElementById("timer");
-      const next = document.getElementById("next");
-      const finish = document.getElementById("finish");
+      const questionEl = document.getElementById("question"); // Get the question element
+      const optionsEl = document.getElementById("options"); // Get the options element
+      const startBtn = document.getElementById("start"); // Get the start button
+      const completeEl = document.getElementById("complete"); // Get the completion message element
+      const timerEl = document.getElementById("timer"); // Get the timer element
+      const nextBtn = document.getElementById("next"); // Get the next button
+      const finishBtn = document.getElementById("finish"); // Get the finish button
+      const resetBtn = document.getElementById("reset"); // Get the reset button
+
       const quiz = [
         {
-          index: 1,
           question:
-            "What is the difference between '==', '===', and 'Object.is'?",
+            "What is the difference between '==', '===' and 'Object.is'?",
           options: [
             "'==' performs type coercion, '===' does not, 'Object.is' is like '===' but more precise for certain edge cases",
             "'==' and '===' are the same, 'Object.is' is different",
@@ -172,34 +217,31 @@
             "'==' performs type coercion, '===' does not, 'Object.is' is like '===' but more precise for certain edge cases",
         },
         {
-          index: 2,
           question: "What does the 'debounce' function do?",
           options: [
-            "It delays the execution of a function until after a certain time has passed since the last call",
             "It ensures a function is only called once",
             "It allows a function to be called multiple times",
+            "It delays the execution of a function until after a certain time has passed since the last call",
             "It prevents a function from being called",
           ],
           answer:
             "It delays the execution of a function until after a certain time has passed since the last call",
         },
         {
-          index: 3,
           question: "What is the purpose of 'Symbol' in JavaScript?",
           options: [
-            "To create unique identifiers for object properties",
             "To store binary data",
             "To create secret codes",
             "To handle errors",
+            "To create unique identifiers for object properties",
           ],
           answer: "To create unique identifiers for object properties",
         },
         {
-          index: 4,
           question: "How does the 'reduce' method work in JavaScript?",
           options: [
-            "It reduces an array to a single value by executing a reducer function on each element",
             "It removes elements from an array",
+            "It reduces an array to a single value by executing a reducer function on each element",
             "It combines two arrays into one",
             "It sorts an array in descending order",
           ],
@@ -207,7 +249,6 @@
             "It reduces an array to a single value by executing a reducer function on each element",
         },
         {
-          index: 5,
           question:
             "What is the difference between 'async' and 'defer' attributes in a script tag?",
           options: [
@@ -220,30 +261,27 @@
             "'async' loads the script asynchronously; 'defer' loads the script after the document is parsed",
         },
         {
-          index: 6,
           question: "What is the 'Event Loop' in JavaScript?",
           options: [
-            "A mechanism that handles the execution of multiple tasks by managing the call stack and the message queue",
             "A function that loops through an array",
             "A method to handle events in a queue",
+            "A mechanism that handles the execution of multiple tasks by managing the call stack and the message queue",
             "A way to create infinite loops",
           ],
           answer:
             "A mechanism that handles the execution of multiple tasks by managing the call stack and the message queue",
         },
         {
-          index: 7,
           question: "What does the 'Reflect' object do in JavaScript?",
           options: [
-            "It provides methods for interceptable JavaScript operations",
-            "It reflects the value of an object",
             "It creates a mirror image of an array",
+            "It reflects the value of an object",
             "It copies the properties of one object to another",
+            "It provides methods for interceptable JavaScript operations",
           ],
           answer: "It provides methods for interceptable JavaScript operations",
         },
         {
-          index: 8,
           question: "What is 'tail call optimization' in JavaScript?",
           options: [
             "A technique to optimize recursive function calls to avoid stack overflow",
@@ -255,98 +293,148 @@
             "A technique to optimize recursive function calls to avoid stack overflow",
         },
         {
-          index: 9,
           question: "How do 'closures' affect memory usage in JavaScript?",
           options: [
-            "Closures can lead to increased memory usage if not managed properly due to retained references",
             "Closures always reduce memory usage",
             "Closures do not affect memory usage",
             "Closures clear the memory after use",
+            "Closures can lead to increased memory usage if not managed properly due to retained references",
           ],
           answer:
             "Closures can lead to increased memory usage if not managed properly due to retained references",
         },
         {
-          index: 10,
-          question: "What is 'memoization' in JavaScript?",
+          question: "What is 'Hoisting' in JavaScript?",
           options: [
-            "A technique to optimize function calls by caching the results of expensive function calls",
-            "A method to memorize function names",
-            "A way to optimize memory allocation",
-            "A technique to optimize loops",
+            "A method to sort an array",
+            "A behavior where variable and function declarations are moved to the top of their scope before code execution",
+            "A technique to load images faster",
+            "A way to optimize loops",
           ],
           answer:
-            "A technique to optimize function calls by caching the results of expensive function calls",
+            "A behavior where variable and function declarations are moved to the top of their scope before code execution",
         },
-      ];
-      let currentIndex = 0;
-      let score = 0;
-      let timer;
-      let timeLeft = 30;
-      start.addEventListener("click", startQuiz);
-      next.addEventListener("click", nextQuestion);
-      finish.addEventListener("click", showResult);
-      function startQuiz() {
-        start.style.display = "none";
-        next.style.display = "inline-block";
-        finish.style.display = "inline-block";
-        showQuestion();
-        startTimer();
-      }
-      function showQuestion() {
-        clearInterval(timer);
-        startTimer();
-        const q = quiz[currentIndex];
-        question.textContent = `Q${q.index}: ${q.question}`;
-        options.innerHTML = "";
-        q.options.forEach((option) => {
-          const button = document.createElement("button");
-          button.textContent = option;
-          button.classList.add("option");
-          button.addEventListener("click", () => selectOption(option));
-          options.appendChild(button);
-        });
-      }
-      function selectOption(option) {
-        const q = quiz[currentIndex];
-        if (option === q.answer) {
-          score++;
-        }
-        if (currentIndex < quiz.length - 1) {
-          currentIndex++;
-          showQuestion();
-        } else {
-          showResult();
-        }
-      }
-      function nextQuestion() {
-        if (currentIndex < quiz.length - 1) {
-          currentIndex++;
-          showQuestion();
-        } else {
-          showResult();
-        }
-      }
-      function showResult() {
-        clearInterval(timer);
-        question.style.display = "none";
-        options.style.display = "none";
-        next.style.display = "none";
-        finish.style.display = "none";
-        complete.textContent = `Quiz complete! Your score is ${score} out of ${quiz.length}`;
-      }
-      function startTimer() {
-        timeLeft = 30;
-        timerElement.textContent = `Time left: ${timeLeft}s`;
+      ]; // Array of quiz questions and answers
+
+      let currentQuestion = 0; // Variable to keep track of the current question
+      let score = 0; // Variable to keep track of the score
+      let timer; // Variable to store the timer
+      let timerValue = 600; // Initial timer value in seconds
+
+      const startQuiz = () => {
+        // Function to start the quiz
+        questionEl.style.display = "block"; // Show the question element
+        optionsEl.style.display = "block"; // Show the options element
+        startBtn.style.display = "none"; // Hide the start button
+        nextBtn.style.display = "inline-block"; // Show the next button
+        resetBtn.style.display = "none"; // Hide the reset button
+        showQuestion(); // Display the first question
+        startTimer(); // Start the timer
+      };
+
+      const startTimer = () => {
+        // Function to start the timer
         timer = setInterval(() => {
-          timeLeft--;
-          timerElement.textContent = `Time left: ${timeLeft}s`;
-          if (timeLeft <= 0) {
-            clearInterval(timer);
-            showResult();
+          // Set an interval to update the timer every second
+          timerValue--; // Decrement the timer value
+          timerEl.innerText = `Time left: ${timerValue} seconds`; // Update the timer element
+          if (timerValue <= 0) {
+            // If the timer reaches 0
+            finishQuiz(); // Finish the quiz
           }
-        }, 1000);
-      }
+        }, 1000); // Update the timer every second (1000 milliseconds)
+      };
+
+      const showQuestion = () => {
+        // Function to display the current question
+        if (currentQuestion < quiz.length) {
+          // If there are questions remaining
+          questionEl.innerText = quiz[currentQuestion].question; // Display the question
+          optionsEl.innerHTML = ""; // Clear the options
+          quiz[currentQuestion].options.forEach((option) => {
+            // Loop through the options
+            const button = document.createElement("button"); // Create a button for each option
+            button.innerText = option; // Create a button for each option
+            button.classList.add("option"); // Add the 'option' class to the button
+            button.addEventListener(
+              "click",
+              () =>
+                // Add an event listener to the button
+                selectOption(button, option) // Call the selectOption function when the button is clicked
+            );
+            optionsEl.appendChild(button); // Append the button to the options element
+          });
+          nextBtn.style.display =
+            currentQuestion === quiz.length - 1 ? "none" : "inline-block"; // Show the next button if there are more questions
+          finishBtn.style.display =
+            currentQuestion === quiz.length - 1 ? "inline-block" : "none"; // Show the finish button if it's the last question
+        }
+      };
+
+      const selectOption = (button, selectedOption) => {
+        // Function to select an option
+        const isCorrect = selectedOption === quiz[currentQuestion].answer; // Check if the selected option is correct
+        button.classList.add(isCorrect ? "correct" : "incorrect"); // Add the 'correct' or 'incorrect' class to the button
+
+        // Disable all option buttons
+        Array.from(optionsEl.children).forEach((btn) => (btn.disabled = true));
+
+        if (isCorrect) {
+          score++; // Increment the score if the selected option is correct
+        }
+
+        // If the selected option is incorrect, indicate the correct answer
+        if (!isCorrect) {
+          const correctButton = Array.from(optionsEl.children).find(
+            //
+            (btn) => btn.textContent.trim() === quiz[currentQuestion].answer
+          );
+          if (correctButton) {
+            correctButton.classList.add("correct");
+          }
+        }
+      };
+
+      const finishQuiz = () => {
+        // Function to finish the quiz
+        clearInterval(timer); // Clear the timer
+        questionEl.style.display = "none"; // Hide the question element
+        optionsEl.style.display = "none"; // Hide the options element
+        nextBtn.style.display = "none"; // Hide the next button
+        finishBtn.style.display = "none"; // Hide the finish button
+        timerEl.style.display = "none"; // Hide the timer element
+        completeEl.innerText = `Quiz complete! You scored ${score} out of ${quiz.length}.`; // Display the completion message
+        resetBtn.style.display = "inline-block"; // Show the reset button
+      };
+
+      const resetQuiz = () => {
+        // Function to reset the quiz
+        currentQuestion = 0; // Reset the current question
+        score = 0; // Reset the score
+        timerValue = 600; // Reset the timer value
+        timerEl.innerText = `Time left: ${timerValue} seconds`; // Reset the timer element
+        // questionEl.style.display = "block";
+        // optionsEl.style.display = "block";
+        completeEl.innerText = ""; // Clear the completion message
+        startBtn.style.display = "inline-block"; // Show the start button
+        resetBtn.style.display = "none"; // Hide the reset button
+        nextBtn.style.display = "none"; // Hide the next button
+        finishBtn.style.display = "none"; // Hide the finish button
+        clearInterval(timer); // Clear any existing timer
+      };
+
+      startBtn.addEventListener("click", () => {
+        // Add an event listener to the start button
+        startQuiz(); // Start the quiz
+      });
+      nextBtn.addEventListener("click", () => {
+        // Add an event listener to the next button
+        currentQuestion++; // Move to the next question
+        showQuestion(); // Display the next question
+        Array.from(optionsEl.children).forEach((btn) => (btn.disabled = false)); // Re-enable options for the new question
+      });
+      finishBtn.addEventListener("click", finishQuiz); // Add an event listener to the finish button
+      resetBtn.addEventListener("click", resetQuiz); // Add an event listener to the reset button
     </script>
   </body>
 </html>
